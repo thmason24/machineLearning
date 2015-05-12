@@ -59,7 +59,7 @@ lambda = 0.1;
 theta=zeros(size(X,2),1);
 size(theta);
 lrCostFunction(theta,X,y,lambda);
-break
+
 
 [all_theta] = oneVsAll(X, y, num_labels, lambda);
 

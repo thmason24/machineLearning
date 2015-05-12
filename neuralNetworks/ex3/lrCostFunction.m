@@ -14,9 +14,15 @@ sizetheta=size(theta)
 size(X * theta)
 
 J = (1/m)*sum(-y.*log(sigmoid(X * theta))-(1-y).*log(1-sigmoid(X * theta)));
-grad = (1/m)*sum(sigmoid(X * theta).*X);
-size(j)
-size(grad)
+#add regularization
+#add regularization
+J = J + (lambda/(2*m)) * sum(theta(2:end).^2);
+
+
+grad = (1/m)*sum((sigmoid(X * theta)-y).*X);
+#add regularization
+grad = grad + (lambda/m) * sum(theta(2:end));
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
 %               You should set J to the cost.
