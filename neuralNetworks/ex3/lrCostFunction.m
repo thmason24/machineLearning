@@ -9,19 +9,48 @@ function [J, grad] = lrCostFunction(theta, X, y, lambda)
 m = length(y); % number of training examples
 
 % You need to return the following variables correctly 
-sizex=size(X)
-sizetheta=size(theta)
-size(X * theta)
-
-J = (1/m)*sum(-y.*log(sigmoid(X * theta))-(1-y).*log(1-sigmoid(X * theta)));
-#add regularization
-#add regularization
-J = J + (lambda/(2*m)) * sum(theta(2:end).^2);
 
 
-grad = (1/m)*sum((sigmoid(X * theta)-y).*X);
+unRegJ = (1/m)*sum(-y.*log(sigmoid(X * theta))-(1-y).*log(1-sigmoid(X * theta)));
+
+test=sum(-y.*log(sigmoid(X * theta)));
+test2=sum(-log(1-sigmoid(X * theta)));
+test3=sum(-(1-y).*log(1-sigmoid(X * theta)));
 #add regularization
-grad = grad + (lambda/m) * sum(theta(2:end));
+J = unRegJ + (lambda/(2*m)) * sum(theta(2:end).^2);
+#loopJ=0;
+#loopTest=0;
+#loopTest2=0;
+#loopTest3=0;
+#for i=1:m
+#	loopJ = loopJ + (-y(i)*log(sigmoid(X(i,:) * theta)))-(1-y(i))*log(1-sigmoid(X(i,:)*theta));
+#	loopTest = loopTest + -y(i)*log(sigmoid(X(i,:)*theta));
+#	loopTest2 = loopTest2 - log(1-sigmoid(X(i,:)*theta)); 
+#	loopTest3 = loopTest3 - (1-y(i))*log(1-sigmoid(X(i,:)*theta)); 
+#endfor
+
+#unRegJ
+#loopJ/m
+
+#test
+#loopTest
+#test2
+#loopTest2
+#test3
+#loopTest3
+
+
+unRegGrad = (1/m)*(sigmoid(X * theta)-y)'*X;
+size(unRegGrad);
+
+#add regularization to every theta except zero
+regTheta=theta;
+regTheta(1)=0;
+size(regTheta);
+grad = unRegGrad + (lambda/m) * regTheta';
+
+
+
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
