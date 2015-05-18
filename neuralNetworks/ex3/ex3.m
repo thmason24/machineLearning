@@ -65,7 +65,6 @@ lrCostFunction(theta,X,y,lambda);
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
-break
 
 %% ================ Part 3: Predict for One-Vs-All ================
 %  After ...

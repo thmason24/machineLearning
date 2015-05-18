@@ -22,8 +22,18 @@ p = zeros(size(X, 1), 1);
 %
 
 
+#add a_0^1
+X = [ones(m,1) X];
 
+#second layer
+a2 = sigmoid(X * Theta1');
+#Add a01 to second layer
+a2 = [ones(m,1) a2];
 
+#calculate final layer
+a3 = sigmoid(a2*Theta2');
+
+[max p] = max(a3,[],2);
 
 
 
