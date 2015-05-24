@@ -69,6 +69,27 @@ J = (1/m)*sum(sum((-yVecs.*log(h)-(1-yVecs).*log(1-h))));
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
+
+for i=1:m
+	%forward propogation of the ith training example
+	z2=X(i,:) * Theta1';
+	a2=sigmoid(z2);
+	h=sigmoid([1 a2] * Theta2');
+	%compute error term of output layer
+	delta3 = h-yVecs(i,:);
+	%compute error term of hidden layer
+	delta2 = (delta3 * Theta2).*sigmoidGradient([1 z2]);
+	delta2 = delta2(2:end);
+	%compute grads
+	Theta1_grad = Theta1_grad + delta2'*X(i,:); 
+	Theta2_grad = Theta2_grad + delta3'*[1 a2];
+	
+endfor
+%normalize
+Theta1_grad = Theta1_grad/m;
+Theta2_grad = Theta2_grad/m;
+
+
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -78,12 +99,18 @@ J = (1/m)*sum(sum((-yVecs.*log(h)-(1-yVecs).*log(1-h))));
 %               and Theta2_grad from Part 2.
 %
 
+J = J + (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2))  + sum(sum(Theta2(:,2:end).^2)(:)));
 
 
+regTheta1_grad = (lambda/m)*Theta1;
+regTheta2_grad = (lambda/m)*Theta2;
+
+regTheta1_grad(:,1) = 0;
+regTheta2_grad(:,1) = 0;
 
 
-
-
+Theta1_grad = Theta1_grad + regTheta1_grad;
+Theta2_grad = Theta2_grad + regTheta2_grad;
 
 
 
